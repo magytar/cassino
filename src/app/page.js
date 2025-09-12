@@ -504,7 +504,7 @@ function handleLogin(e) {
     <h3 className="text-xl font-bold text-orange-400">Popular</h3>
   </div>
 
-  <div className="flex flex-wrap gap-4">
+  <div className="flex flex-wrap gap-4 flex items-center justify-center">
     {popularGames.map((game) => (
       <div onClick={() => verifica()}
         key={game.id}
