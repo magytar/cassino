@@ -407,7 +407,7 @@ function handleLogin(e) {
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Fechar modal"
-                  className="text-red-900/70 hover:text-red-900"
+                  className="text-red-1000 hover:text-red-900"
                 >
                   ✕
                 </button>
@@ -538,7 +538,7 @@ function handleLogin(e) {
                 </form>
               )}
 
-              <p className="text-xs text-red-900/70 mt-4">Registre-se e jogue com responsabilidade.</p>
+              <p className="text-xs text-white text-red-900/70 mt-4">Registre-se e jogue com responsabilidade.</p>
             </div>
           </div>
         </div>
