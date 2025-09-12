@@ -22,8 +22,9 @@ import Img_safari from "./imgs/safari.png"
 
 import Img_banner from "./imgs/banner.png"
 
+
 export default function MontanhaCassino() {
-  const [currentJackpot, setCurrentJackpot] = useState(1356920.00);
+  const [currentJackpot, setCurrentJackpot] = useState(27345234.00);
   const [showAgeModal, setShowAgeModal] = useState(true);
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ username: "", password: "", phone: "" });
@@ -394,7 +395,7 @@ function handleLogin(e) {
                 </form>
               )}
 
-              <p className="text-xs text-red-900/70 mt-4">Atenção: este é um exemplo. Nunca salve senhas em localStorage em produção.</p>
+              <p className="text-xs text-red-900/70 mt-4">Registre-se e jogue com responsabilidade.</p>
             </div>
           </div>
         </div>
@@ -444,15 +445,18 @@ function handleLogin(e) {
         {/* Convite Banner */}
         
 
-<div className="mx-4 mt-4 mb-4 relative overflow-hidden rounded-2xl w-full h-[200px]">
+<div className="mx-4 mt-4 mb-4 relative w-full overflow-hidden rounded-2xl">
   <Image
-    src={Img_banner}   // sua imagem aqui
+    src={Img_banner} // sua imagem aqui
     alt="Banner"
-    fill
-    style={{ objectFit: "cover" }}
+    width={1920}       // largura real da imagem
+    height={600}       // altura real da imagem
+    style={{ objectFit: "contain" }}
     className="transition-transform duration-500 hover:scale-105"
+    priority
   />
 </div>
+
 
         {/* Jackpot Banner */}
         <div className="mx-4 mb-6 relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-600 via-red-500 to-orange-500 shadow-2xl">
@@ -477,16 +481,11 @@ function handleLogin(e) {
                 })}
               </div>
             </div>
-            
-            <div className="flex items-center justify-center space-x-2">
-              <span className="text-2xl">🐷</span>
-              <span className="text-2xl">🎪</span>
-            </div>
           </div>
         </div>
 
         {/* Aviso */}
-        <div className="mx-4 mb-6 bg-red-800/50 rounded-lg p-3 flex items-center space-x-3">
+        <div className="mx-4 mb-6 bg-red-800/50 rounded-lg p-1 flex items-center space-x-3">
           <div className="text-2xl">📢</div>
           <div className="flex-1">
             <p className="text-sm text-red-200">
