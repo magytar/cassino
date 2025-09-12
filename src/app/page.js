@@ -23,7 +23,7 @@ import Img_safari from "./imgs/safari.png"
 import Img_banner from "./imgs/banner.png"
 
 export default function MontanhaCassino() {
-  const [currentJackpot, setCurrentJackpot] = useState(356920.00);
+  const [currentJackpot, setCurrentJackpot] = useState(1356920.00);
   const [showAgeModal, setShowAgeModal] = useState(true);
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ username: "", password: "", phone: "" });
@@ -32,7 +32,7 @@ export default function MontanhaCassino() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentJackpot(prev => prev + Math.random() * 100);
+      setCurrentJackpot(prev => prev + Math.random() * 1000);
     }, 250);
     return () => clearInterval(timer);
   }, []);
@@ -468,8 +468,8 @@ function handleLogin(e) {
               <span className="text-3xl">🎯</span>
             </div>
             
-            <div className="bg-red-700 rounded-lg p-3 mb-2 shadow-inner">
-              <div className="text-4xl font-black text-yellow-300 tracking-wider">
+            <div className="bg-red-700 rounded-lg p-1 mb-2 shadow-inner">
+              <div className="text-3xl font-black text-yellow-300 tracking-wider">
                 {currentJackpot.toLocaleString('pt-BR', { 
                   style: 'currency', 
                   currency: 'BRL',
@@ -508,15 +508,15 @@ function handleLogin(e) {
     {popularGames.map((game) => (
       <div onClick={() => verifica()}
         key={game.id}
-        className="relative group rounded-xl p-1 shadow-lg overflow-hidden w-full max-w-[120px]"
+        className="relative group rounded-xl p-1 shadow-lg overflow-hidden w-full max-w-[120px] h-130 max-h-[150px]"
       >
         {/* Imagem de fundo usando Next.js Image */}
-        <div className="absolute inset-0 h-[120px]">
+        <div className="absolute inset-0 h-[150px]">
           <Image
             src={game.img}
             alt={game.provider}
             fill
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", height:"100%" }}
             className="transition-transform duration-500 group-hover:scale-110"
           />
           {/* Gradiente/blur */}
