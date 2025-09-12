@@ -30,6 +30,8 @@ export default function MontanhaCassino() {
   const [form, setForm] = useState({ username: "", password: "", phone: "" });
   const [tab, setTab] = useState("login")
   const [logado, setLogado] = useState(false)
+  const [opendeposito, setOpendeposito] = useState(false);
+  const [amount, setAmount] = useState("");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -39,8 +41,11 @@ export default function MontanhaCassino() {
   }, []);
 
   function verifica() {
-    if(!logado){
+    if(logado){
+      setOpendeposito(true)
+    }else{
       setOpen(true)
+
     }
   }
 
@@ -83,6 +88,15 @@ function handleLogin(e) {
   } else {
   alert("Usuário ou senha inválidos.");
   }
+  }
+
+  function depositar() {
+    if(amount > 30 && amount < 15001){
+      alert("deseja depositar", amount)
+      setOpendeposito(false)
+    }else{
+      alert("coloque um valor certo")
+    }
   }
 
   const popularGames = [
@@ -400,7 +414,75 @@ function handleLogin(e) {
           </div>
         </div>
       )}
+      {opendeposito && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setOpendeposito(false)}
+            aria-hidden
+          />
 
+          {/* modal box */}
+          <div className="relative z-10 w-full max-w-md mx-4 rounded-2xl shadow-2xl overflow-hidden">
+            <div
+              className="p-6 rounded-2xl shadow-lg"
+              style={{
+                background: 'rgba(220,38,38,0.15)', // vermelho fraco quase transparente
+                backdropFilter: 'blur(6px)',
+                border: '1px solid rgba(220,38,38,0.25)'
+              }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-lg font-semibold text-white">Faça um depósito via Pix e comece a jogar.</h4>
+                <button
+                  onClick={() => setOpendeposito(false)}
+                  aria-label="Fechar modal"
+                  className="text-white/70 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+              <p className='text-white'>✅ Pagamento via Pix com segurança.
+💰 Valor mínimo: R$30 | Máximo: R$15.000.</p>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm text-white/80 mb-1" htmlFor="amount">Valor</label>
+                  <input
+                    id="amount"
+                    name="amount"
+                    type="number"
+                    value={amount}
+                    onChange={e => setAmount(e.target.value)}
+                    required
+                    min={1}
+                    className="w-full px-3 py-2 rounded-md border border-red-300 bg-white/30 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+                    placeholder="R$ 30,00 ate R$ 15.000,00"
+                  />
+                </div>
+
+                <div className="flex items-center justify-end gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setOpendeposito(false)}
+                    className="px-4 py-2 rounded-md bg-white/30 text-white hover:bg-white/40"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={() => depositar()}
+                    className="px-4 py-2 rounded-md bg-red-700 text-white shadow-sm hover:bg-red-800"
+                  >
+                    Depositar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="min-h-screen bg-gradient-to-b from-red-900 via-red-800 to-red-900 text-white overflow-x-hidden">
         {/* Header */}
         <header className="flex items-center justify-between p-4 bg-red-900/80 backdrop-blur-sm">
@@ -423,7 +505,7 @@ function handleLogin(e) {
   <h1 className="text-sm text-green-500 bg-green-100/20 px-2 py-0.5 rounded-md shadow-sm w-max">
     R$0
   </h1>
-  <button className="bg-yellow-500 hover:bg-blue-600 text-white text-sm px-2 py-0.5 rounded-md shadow-sm transition-colors">
+  <button className="bg-yellow-500 hover:bg-blue-600 text-white text-sm px-2 py-0.5 rounded-md shadow-sm transition-colors" onClick={() => setOpendeposito(true)}>
     Recarregar
   </button>
 </div>
