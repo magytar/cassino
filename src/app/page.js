@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from "next/image";
-import { Home, Gift, Share2, CreditCard, User, Star, Plus, MessageCircle, X } from 'lucide-react';
+import { Home, Gift, Share2, CreditCard, User, Star, Plus, MessageCircle, X, DollarSign, Wallet,BanknoteArrowDown } from 'lucide-react';
 
 import Img_delights from "./imgs/delights.png"
 import Img_dragon from "./imgs/dragon.png"
@@ -32,6 +32,28 @@ export default function MontanhaCassino() {
   const [logado, setLogado] = useState(false)
   const [opendeposito, setOpendeposito] = useState(false);
   const [amount, setAmount] = useState("");
+
+  const [openSaque, setOpensaque] = useState(false);
+  const [openPromo, setOpenpromo] = useState(false);
+  const [openPerfil, setopenPerfil] = useState(false);
+
+  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState("");
+
+  const generateId = () => "USR-" + Math.floor(Math.random() * 1000000);
+
+  useEffect(() => {
+    if (openPerfil) {
+      const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+      const current = storedUsers.find((u) => u.username === form.username);
+
+      if (current) {
+        setUserData(current);
+        setUserId(generateId());
+      }
+    }
+  }, [openPerfil, form.username]);
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -207,6 +229,113 @@ function handleLogin(e) {
   return (
     <>
       {/* Age Verification Modal */}
+      {openPerfil && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+    {/* fundo transparente */}
+    <div
+      className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+      onClick={() => setopenPerfil(false)}
+    />
+
+    {/* modal centralizado */}
+    <div className="relative z-10 w-full max-w-sm mx-4 rounded-2xl bg-white shadow-2xl p-6 text-center">
+      <User className="mx-auto mb-4 text-blue-600" size={40} />
+      <h2 className="text-lg font-semibold text-gray-800">Perfil</h2>
+
+      {userData ? (
+        <div className="mt-3 text-sm text-gray-700 space-y-2">
+          <p>
+            <span className="font-bold">Usuário:</span> {userData.username}
+          </p>
+          <p>
+            <span className="font-bold">Email:</span> {userData.email}
+          </p>
+          <p>
+            <span className="font-bold">ID:</span> {userId}
+          </p>
+        </div>
+      ) : (
+        <p className="text-red-600 mt-3 text-sm">
+          Usuário não encontrado no sistema.
+        </p>
+      )}
+
+      <button
+        onClick={() => setopenPerfil(false)}
+        className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+      >
+        Fechar
+      </button>
+      <button
+        onClick={() => {
+          localStorage.removeItem("users"); // limpa usuários
+          setopenPerfil(false); // fecha modal
+          window.location.reload(); // recarrega página
+        }}
+        className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+      >
+        Deslogar
+      </button>
+    </div>
+  </div>
+      )}
+      {openPromo && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center">
+    {/* fundo avermelhado transparente */}
+    <div
+      className="absolute inset-0 bg-red-500/40 backdrop-blur-sm"
+      onClick={() => setOpenpromo(false)}
+    />
+
+    {/* modal centralizado */}
+    <div className="relative z-10 max-w-sm w-full mx-4 rounded-2xl bg-white shadow-2xl p-6 text-center">
+      <h2 className="text-xl font-bold text-red-600 mb-3">
+        🎉 Promoção Ativa!
+      </h2>
+      <p className="text-gray-700 text-sm">
+        Em cada <span className="font-bold">depósito</span> você recebe o{" "}
+        <span className="text-red-600 font-bold">DOBRO</span> do valor.
+      </p>
+
+      <button
+        onClick={() => setOpenpromo(false)}
+        className="mt-6 w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+      >
+        Aproveitar Agora
+      </button>
+    </div>
+  </div>
+)}
+
+      {openSaque && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center">
+    {/* fundo avermelhado transparente */}
+    <div
+      className="absolute inset-0 bg-red-500/40 backdrop-blur-sm"
+      onClick={() => setOpenSaque(false)}
+    />
+
+    {/* modal centralizado */}
+    <div className="relative z-10 max-w-sm w-full mx-4 rounded-2xl bg-white shadow-2xl p-6 text-center">
+      <BanknoteArrowDown className="mx-auto mb-4 text-red-600" size={40} />
+      <h2 className="text-lg font-semibold text-gray-800">
+        Acesso ao Saque
+      </h2>
+      <p className="text-sm text-gray-600 mt-2">
+        Você precisa realizar o{" "}
+        <span className="font-bold">primeiro depósito</span> para ter acesso ao saque.
+      </p>
+
+      <button
+        onClick={() => setOpensaque(false)}
+        className="mt-6 w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+      >
+        Entendi
+      </button>
+    </div>
+  </div>
+)}
+
       {showAgeModal && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
           <div className="bg-gradient-to-br from-red-900 to-red-800 rounded-2xl p-8 max-w-md w-full shadow-2xl border border-red-600">
@@ -636,14 +765,26 @@ function handleLogin(e) {
               <span className="text-xs text-yellow-400 font-semibold">Início</span>
             </div>
             
-            <div className="flex flex-col items-center space-y-1 py-2 px-4" onClick={() => verifica()}>
+            <div className="flex flex-col items-center space-y-1 py-2 px-4" onClick={() => {
+              if(logado){
+                setOpenpromo(true)
+              }else{
+                setOpen(true)
+              }
+            }}>
               <Gift className="w-6 h-6 text-red-300" />
               <span className="text-xs text-red-300">Promoção</span>
             </div>
             
-            <div className="flex flex-col items-center space-y-1 py-2 px-4" onClick={() => verifica()}>
-              <Share2 className="w-6 h-6 text-red-300" />
-              <span className="text-xs text-red-300">Agente</span>
+            <div className="flex flex-col items-center space-y-1 py-2 px-4" onClick={() => {
+              if(logado){
+                setOpensaque(true)
+              }else{
+                setOpen(true)
+              }
+            }}>
+              <Wallet className="w-6 h-6 text-red-300" />
+              <span className="text-xs text-red-300">Saque</span>
             </div>
             
             <div className="flex flex-col items-center space-y-1 py-2 px-4" onClick={() => verifica()}>
@@ -651,7 +792,13 @@ function handleLogin(e) {
               <span className="text-xs text-red-300">Depósito</span>
             </div>
             
-            <div className="flex flex-col items-center space-y-1 py-2 px-4" onClick={() => verifica()}>
+            <div className="flex flex-col items-center space-y-1 py-2 px-4" onClick={() => {
+              if(logado){
+                setopenPerfil(true)
+              }else{
+                setOpen(true)
+              }
+            }}>
               <User className="w-6 h-6 text-red-300" />
               <span className="text-xs text-red-300">Perfil</span>
             </div>
