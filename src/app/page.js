@@ -714,11 +714,11 @@ function handleLogin(e) {
     <h3 className="text-xl font-bold text-orange-400">Popular</h3>
   </div>
 
-  <div className="flex flex-wrap gap-4 flex items-center justify-center">
+  <div className="flex flex-wrap gap-3 flex items-center justify-center">
     {popularGames.map((game) => (
       <div onClick={() => verifica()}
         key={game.id}
-        className="relative group rounded-xl p-1 shadow-lg overflow-hidden w-full min-w-[85px] max-w-[100px] h-130 max-h-[150px]"
+        className="relative group rounded-xl p-1 shadow-lg overflow-hidden w-full min-w-[80px] max-w-[100px] h-130 max-h-[150px]"
       >
         {/* Imagem de fundo usando Next.js Image */}
         <div className="absolute inset-0 h-[150px]">
