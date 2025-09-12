@@ -403,20 +403,15 @@ function handleLogin(e) {
       <div className="min-h-screen bg-gradient-to-b from-red-900 via-red-800 to-red-900 text-white overflow-x-hidden">
         {/* Header */}
         <header className="flex items-center justify-between p-4 bg-red-900/80 backdrop-blur-sm">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-6 bg-white"></div>
-            <div className="w-3 h-6 bg-white"></div>
-            <div className="w-3 h-6 bg-white"></div>
-          </div>
           
           <div className="flex items-center space-x-2">
             <div className="bg-gradient-to-r from-yellow-400 to-orange-500 p-2 rounded-lg">
-              <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-xs">
-                777
+              <div className="w-6 h-8 bg-black-600 rounded flex items-center justify-center text-white font-bold text-xs">
+                N 1
               </div>
             </div>
             <div className="text-center">
-              <div className="text-yellow-400 font-bold text-lg">MONTANHA</div>
+              <div className="text-yellow-400 w-24 font-bold text-lg">CASSINO ZETA</div>
               <div className="flex text-yellow-400 text-xs">
                 ★ ★ ★ ★ ★
               </div>
