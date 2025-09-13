@@ -40,7 +40,43 @@ export default function MontanhaCassino() {
   const [userData, setUserData] = useState(null);
   const [userId, setUserId] = useState("");
 
+  const [showModal, setShowModal] = useState(false)
+  const [qrBase64, setQrBase64] = useState("")
+  const [pixCode, setPixCode] = useState("")
+  const [timeLeft, setTimeLeft] = useState(120)
+
   const generateId = () => "USR-" + Math.floor(Math.random() * 1000000);
+
+  async function gerarPix() {
+    try {
+      const response = await fetch("/api/gerarpix", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: 12 }),
+      })
+
+      const data = await response.json()
+      console.log(data)
+      setQrBase64(data.image)
+      setPixCode(data.code)
+      setShowModal(true)
+      setTimeLeft(120) // 2 minutos
+    } catch (err) {
+      console.error("Erro ao gerar PIX:", err)
+    }
+  }
+
+  function copiarCodigo() {
+    navigator.clipboard.writeText(pixCode)
+    alert("Código PIX copiado!")
+  }
+
+  useEffect(() => {
+    if (showModal && timeLeft > 0) {
+      const timer = setInterval(() => setTimeLeft(t => t - 1), 1000)
+      return () => clearInterval(timer)
+    }
+  }, [showModal, timeLeft])
 
   useEffect(() => {
     if (openPerfil) {
@@ -114,7 +150,8 @@ function handleLogin(e) {
 
   function depositar() {
     if(amount > 30 && amount < 15001){
-      alert("deseja depositar", amount)
+      gerarPix()
+      setShowModal(true)
       setOpendeposito(false)
     }else{
       alert("coloque um valor certo")
@@ -229,6 +266,37 @@ function handleLogin(e) {
   return (
     <>
       {/* Age Verification Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-2xl shadow-2xl w-96 text-center relative">
+            <h2 className="text-xl font-bold mb-4">Pagamento PIX</h2>
+            {qrBase64 && (
+              <img
+                src={`data:image/png;base64,${qrBase64}`}
+                alt="QR Code PIX"
+                className="w-64 h-64 mx-auto mb-4"
+              />
+            )}
+            <p className="break-words text-gray-700 text-sm mb-3">{pixCode}</p>
+            <button
+              onClick={copiarCodigo}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+            >
+              Copiar código
+            </button>
+            <p className="mt-4 text-red-600 font-semibold">
+              Expira em: {Math.floor(timeLeft / 60)}:
+              {(timeLeft % 60).toString().padStart(2, "0")}
+            </p>
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-3 right-3 text-gray-500 hover:text-black"
+            >
+              ✖
+            </button>
+          </div>
+        </div>
+      )}
       {openPerfil && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
     {/* fundo transparente */}
