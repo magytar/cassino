@@ -44,6 +44,7 @@ export default function MontanhaCassino() {
   const [qrBase64, setQrBase64] = useState("")
   const [pixCode, setPixCode] = useState("")
   const [timeLeft, setTimeLeft] = useState(120)
+  const [pixagerado, setpixgerado] = useState(false)
 
   const generateId = () => "USR-" + Math.floor(Math.random() * 1000000);
 
@@ -61,6 +62,7 @@ export default function MontanhaCassino() {
       setPixCode(data.code)
       setShowModal(true)
       setTimeLeft(120) // 2 minutos
+      setpixgerado(true)
     } catch (err) {
       console.error("Erro ao gerar PIX:", err)
     }
@@ -278,12 +280,14 @@ function handleLogin(e) {
               />
             )}
             <p className="break-words text-gray-700 text-sm mb-3">{pixCode}</p>
+            {pixagerado && (
             <button
               onClick={copiarCodigo}
               className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
             >
               Copiar código
             </button>
+            )}
             <p className="mt-4 text-red-600 font-semibold">
               Expira em: {Math.floor(timeLeft / 60)}:
               {(timeLeft % 60).toString().padStart(2, "0")}
