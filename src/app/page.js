@@ -19,6 +19,12 @@ import Img_mania from "./imgs/mania.png"
 import Img_soccer from "./imgs/soccer.png"
 import Img_neko from "./imgs/neko.png"
 import Img_safari from "./imgs/safari.png"
+import Img_rush from "./imgs/rush.png"
+import Img_rampage from "./imgs/rampage.jpg"
+import Img_mystery from "./imgs/mystery.png"
+import Img_scroll from "./imgs/scroll.png"
+import Img_war from "./imgs/war.png"
+import Img_treasure from "./imgs/treasure.png"
 
 import Img_banner from "./imgs/banner.png"
 import Img_banner2 from "./imgs/banner2.png"
@@ -262,6 +268,42 @@ function handleLogin(e) {
       name: "SAFARI WILDS",
       provider: "PG SOFT",
       img:Img_safari
+    },
+    {
+      id: 16,
+      name: "MUSEUM MYSTERY",
+      provider: "PG SOFT",
+      img:Img_mystery
+    },
+    {
+      id: 17,
+      name: "RUSH",
+      provider: "PG SOFT",
+      img:Img_rush
+    },
+    {
+      id: 18,
+      name: "DOOMSDAY RAMPAGE",
+      provider: "PG SOFT",
+      img:Img_rampage
+    },
+    {
+      id: 19,
+      name: "TREASURE FORTUNE",
+      provider: "PG SOFT",
+      img:Img_treasure
+    },
+    {
+      id: 20,
+      name: "MAGIC SCROLL",
+      provider: "PG SOFT",
+      img:Img_scroll
+    },
+    {
+      id: 21,
+      name: "CLASH OF WAR",
+      provider: "oskmeslot",
+      img:Img_war
     }
   ];
 
