@@ -52,7 +52,7 @@ export default function MontanhaCassino() {
       const response = await fetch("/api/gerarpix", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 12 }),
+        body: JSON.stringify({ amount: amount }),
       })
 
       const data = await response.json()
