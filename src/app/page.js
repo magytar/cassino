@@ -21,6 +21,7 @@ import Img_neko from "./imgs/neko.png"
 import Img_safari from "./imgs/safari.png"
 
 import Img_banner from "./imgs/banner.png"
+import Img_banner2 from "./imgs/banner2.png"
 
 
 export default function MontanhaCassino() {
@@ -45,6 +46,9 @@ export default function MontanhaCassino() {
   const [pixCode, setPixCode] = useState("")
   const [timeLeft, setTimeLeft] = useState(120)
   const [pixagerado, setpixgerado] = useState(false)
+
+  const banners = [Img_banner, Img_banner2]
+  const [current, setCurrent] = useState(0)
 
   const generateId = () => "USR-" + Math.floor(Math.random() * 1000000);
 
@@ -108,7 +112,12 @@ export default function MontanhaCassino() {
 
     }
   }
-
+useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent(prev => (prev + 1) % banners.length) // alterna entre 0 e 1
+    }, 2000) // troca a cada 5 segundos
+    return () => clearInterval(interval)
+  }, [])
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -703,10 +712,10 @@ function handleLogin(e) {
           </div>
           {logado ? (
             <div className="flex items-center gap-2">
-  <h1 className="text-sm text-green-500 bg-green-100/20 px-2 py-0.5 rounded-md shadow-sm w-max">
+  <h1 className="text-xs text-yellow-500 bg-yellow-100/20 px-3 py-1 rounded-md shadow-sm min-w-[70px] text-center">
     R$0
   </h1>
-  <button className="bg-yellow-500 hover:bg-blue-600 text-white text-sm px-2 py-0.5 rounded-md shadow-sm transition-colors" onClick={() => setOpendeposito(true)}>
+  <button className="bg-yellow-500 hover:bg-blue-600 text-white text-xs px-2 py-1 rounded-md shadow-sm transition-colors" onClick={() => setOpendeposito(true)}>
     Recarregar
   </button>
 </div>
@@ -728,17 +737,29 @@ function handleLogin(e) {
         {/* Convite Banner */}
         
 
-<div className="mx-4 mt-4 mb-4 relative w-full overflow-hidden rounded-2xl">
-  <Image
-    src={Img_banner} // sua imagem aqui
-    alt="Banner"
-    width={1920}       // largura real da imagem
-    height={600}       // altura real da imagem
-    style={{ objectFit: "contain" }}
-    className="transition-transform duration-500 hover:scale-105"
-    priority
-  />
+<div className="w-full flex justify-center items-center mb-3">
+  <div className="relative w-full max-w-4xl h-[180px] md:h-[280px] lg:h-[320px] overflow-hidden rounded-2x0">
+    {banners.map((banner, index) => (
+      <div
+        key={index}
+        className={`absolute inset-0 transition-opacity duration-1000 ${
+          index === current ? "opacity-100 z-10" : "opacity-0 z-0"
+        }`}
+      >
+        <Image
+          src={banner}
+          alt={`Banner ${index + 1}`}
+          fill
+          style={{ objectFit: "cover" }}
+          className="transition-transform duration-500 hover:scale-105"
+          priority
+        />
+      </div>
+    ))}
+  </div>
 </div>
+
+
 
 
         {/* Jackpot Banner */}
@@ -790,7 +811,7 @@ function handleLogin(e) {
     {popularGames.map((game) => (
       <div onClick={() => verifica()}
         key={game.id}
-        className="relative group rounded-xl p-1 shadow-lg overflow-hidden w-full min-w-[80px] max-w-[100px] h-130 max-h-[150px]"
+        className="relative group rounded-xl p-0  overflow-hidden w-full min-w-[80px] max-w-[100px] h-130 max-h-[150px]"
       >
         {/* Imagem de fundo usando Next.js Image */}
         <div className="absolute inset-0 h-[150px]">
@@ -802,18 +823,18 @@ function handleLogin(e) {
             className="transition-transform duration-500 group-hover:scale-110"
           />
           {/* Gradiente/blur */}
-          <div className="absolute inset-0 bg-black/20 transition duration-500 group-hover:backdrop-blur-sm"></div>
+          <div className="absolute inset-0 transition duration-500 group-hover:backdrop-blur-sm"></div>
         </div>
 
         {/* Conteúdo acima da imagem */}
         <div className="relative h-[120px] flex items-center justify-center">
           {/* Provider badge */}
-          <div className="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded-full z-10">
+          <div className="absolute top-2 left-2 bg-black/40 text-white text-xs px-2 py-1 rounded-full z-10">
             {game.provider}
           </div>
 
           {/* Star button */}
-          <div className="absolute top-2 right-2 bg-black/70 p-1 rounded-full z-10">
+          <div className="absolute top-2 right-2 bg-black/60 p-1 rounded-full z-10">
             <Star className="w-4 h-4 text-white" />
           </div>
         </div>
