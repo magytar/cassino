@@ -166,7 +166,7 @@ function handleLogin(e) {
   }
 
   function depositar() {
-    if(amount > 30 && amount < 15001){
+    if(amount >= 10 && amount < 15001){
       gerarPix()
       setShowModal(true)
       setOpendeposito(false)
@@ -696,7 +696,7 @@ function handleLogin(e) {
                 </button>
               </div>
               <p className='text-white'>✅ Pagamento via Pix com segurança.
-💰 Valor mínimo: R$30 | Máximo: R$15.000.</p>
+💰 Valor mínimo: R$10 | Máximo: R$15.000.</p>
 
               <div className="space-y-4">
                 <div>
